@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/meet/accept/0.1",
+  "title": "Meet Accept — payload",
+  "description": "The acceptor says yes to a meeting code. The response ($defs.Response) names the opener.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "code",
+    "mark"
+  ],
+  "properties": {
+    "code": {
+      "type": "string",
+      "pattern": "^[abcdefghjkmnpqrstuvwxyz23456789]{5}$",
+      "description": "The meeting code: five characters from the guide's unambiguous alphabet, lowercase."
+    },
+    "mark": {
+      "$ref": "#/$defs/Mark",
+      "description": "The acceptor's mark; equal to the document's issuer before joining."
+    }
+  },
+  "$defs": {
+    "Mark": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "sha256(\"mark|\" + device secret), 64 lowercase hex."
+    },
+    "Response": {
+      "$anchor": "response",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "opener"
+      ],
+      "description": "Whom the acceptor is meeting.",
+      "properties": {
+        "opener": {
+          "$ref": "#/$defs/Mark",
+          "description": "The opener's mark."
+        }
+      }
+    }
+  }
+}

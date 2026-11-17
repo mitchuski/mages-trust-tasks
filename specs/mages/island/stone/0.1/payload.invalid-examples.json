@@ -1,0 +1,57 @@
+[
+  {
+    "note": "A different proof kind: only agentprivacy/island-stone/1 is defined by this version.",
+    "payload": {
+      "kind": "agentprivacy/island-stone/2",
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "root": "557f39c8cff26853df61fe275f2380d6aa5aabd560ce0413a09bb1078ef45c72",
+      "stars": [ { "seq": 9, "type": "island/stone", "recordedAt": "2026-11-12T18:00:00.000Z", "leaf": "bb4551849d8fa8fcb4ab459a69b34e962266994ba6aa33e3ca8945ca85d947cd", "prev": "4af1d0b50ed2405e93561f34c22ff1714fb487fbd7a66de9a7ec43b80ec99757", "hash": "80b01931f5ff7279e7a787d0258f44ff8770d8a3d251c0981a9cba70a2776710", "pre": "{}" } ]
+    }
+  },
+  {
+    "note": "A star without its preimage cannot pass check 1; pre is required on every star of a stone proof.",
+    "payload": {
+      "kind": "agentprivacy/island-stone/1",
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "root": "557f39c8cff26853df61fe275f2380d6aa5aabd560ce0413a09bb1078ef45c72",
+      "stars": [ { "seq": 9, "type": "island/stone", "recordedAt": "2026-11-12T18:00:00.000Z", "leaf": "bb4551849d8fa8fcb4ab459a69b34e962266994ba6aa33e3ca8945ca85d947cd", "prev": "4af1d0b50ed2405e93561f34c22ff1714fb487fbd7a66de9a7ec43b80ec99757", "hash": "80b01931f5ff7279e7a787d0258f44ff8770d8a3d251c0981a9cba70a2776710" } ]
+    }
+  },
+  {
+    "note": "A non-island star in a stone proof: a note's preimage must never be revealed, so the type enum admits only island/quest and island/stone.",
+    "payload": {
+      "kind": "agentprivacy/island-stone/1",
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "root": "557f39c8cff26853df61fe275f2380d6aa5aabd560ce0413a09bb1078ef45c72",
+      "stars": [ { "seq": 4, "type": "note/leave", "recordedAt": "2026-11-11T09:00:00.000Z", "leaf": "bb4551849d8fa8fcb4ab459a69b34e962266994ba6aa33e3ca8945ca85d947cd", "prev": "4af1d0b50ed2405e93561f34c22ff1714fb487fbd7a66de9a7ec43b80ec99757", "hash": "80b01931f5ff7279e7a787d0258f44ff8770d8a3d251c0981a9cba70a2776710", "pre": "{\"type\":\"note/leave\"}" } ]
+    }
+  },
+  {
+    "note": "An empty walk: a stone proof holds at least the stone.",
+    "payload": {
+      "kind": "agentprivacy/island-stone/1",
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "root": "0000000000000000000000000000000000000000000000000000000000000000",
+      "stars": []
+    }
+  },
+  {
+    "note": "A mark that is not a digest.",
+    "payload": {
+      "kind": "agentprivacy/island-stone/1",
+      "mark": "walker-42",
+      "root": "557f39c8cff26853df61fe275f2380d6aa5aabd560ce0413a09bb1078ef45c72",
+      "stars": [ { "seq": 9, "type": "island/stone", "recordedAt": "2026-11-12T18:00:00.000Z", "leaf": "bb4551849d8fa8fcb4ab459a69b34e962266994ba6aa33e3ca8945ca85d947cd", "prev": "4af1d0b50ed2405e93561f34c22ff1714fb487fbd7a66de9a7ec43b80ec99757", "hash": "80b01931f5ff7279e7a787d0258f44ff8770d8a3d251c0981a9cba70a2776710", "pre": "{}" } ]
+    }
+  },
+  {
+    "note": "A determination without its steps: ok alone is a verdict nobody can check.",
+    "variant": "response",
+    "payload": { "ok": true, "quests": [1, 7, 13] }
+  },
+  {
+    "note": "A step note past its bound: notes are short and never carry verifier-internal state (maxLength 200).",
+    "variant": "response",
+    "payload": { "ok": false, "quests": [], "steps": [ { "name": "the root re-derives", "ok": false, "note": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" } ] }
+  }
+]

@@ -1,0 +1,288 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/artefact/present/0.1",
+  "title": "Artefact Present — payload",
+  "description": "An artefact forged or witnessed in the spellweb ceremony (kind spellweb/artefact/1): the blade, its proof as the ceremony produced it, and optionally the constellation node ids it was evoked from. The response ($defs.Response) carries the verifier's checks.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "artefact",
+    "proof"
+  ],
+  "properties": {
+    "kind": {
+      "const": "spellweb/artefact/1",
+      "description": "The artefact kind. Only spellweb/artefact/1 is defined by this version."
+    },
+    "artefact": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The blade as the ceremony named it.",
+      "required": [
+        "id",
+        "name",
+        "emoji",
+        "tier",
+        "stratum",
+        "forgedAt"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 128,
+          "description": "spellweb's local identifier for the blade (`blade-<epoch ms>`). Unique per bearer, not globally."
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120,
+          "description": "The blade's name as forged."
+        },
+        "emoji": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 32,
+          "description": "The blade's emoji glyph as forged."
+        },
+        "tier": {
+          "type": "string",
+          "enum": [
+            "blade",
+            "light",
+            "heavy",
+            "dragon"
+          ],
+          "description": "The blade's tier, from the charge reached at the evoke."
+        },
+        "stratum": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 6,
+          "description": "The Hamming weight of the blade's six dimensions, 0 to 6."
+        },
+        "forgedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the blade was forged, as the bearer's clock read it."
+        },
+        "witness": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "of",
+            "from"
+          ],
+          "description": "Present only on a witness blade: what it witnessed. Absent means the bearer forged the blade from their own constellation.",
+          "properties": {
+            "of": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 128,
+              "description": "The witnessed constellation's hash; null when the source did not carry one."
+            },
+            "from": {
+              "type": [
+                "string",
+                "null"
+              ],
+              "maxLength": 256,
+              "description": "Where the witnessed artefact came from (its file or bearer label); null when unknown."
+            }
+          }
+        }
+      }
+    },
+    "proof": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "The proof exactly as the ceremony produced it. A recomputed value will not re-derive.",
+      "required": [
+        "constellationHash",
+        "bladeHash",
+        "previousBladeHash",
+        "chainLength",
+        "commitment",
+        "commitmentVerified",
+        "signature",
+        "chargeLevel",
+        "lapCount",
+        "nodeCount"
+      ],
+      "properties": {
+        "constellationHash": {
+          "$ref": "#/$defs/Hex",
+          "description": "spellweb's hashConstellation over the ordered node ids."
+        },
+        "bladeHash": {
+          "$ref": "#/$defs/Hex",
+          "description": "The blade's hash, binding it to its predecessor."
+        },
+        "previousBladeHash": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/Hex"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "description": "The bearer's previous blade's bladeHash; null exactly when this is the bearer's first blade (chainLength 1)."
+        },
+        "chainLength": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "The blade's position on the bearer's chain, from 1."
+        },
+        "commitment": {
+          "$ref": "#/$defs/Hex",
+          "description": "sha256(constellationHash + nonce), made before the evoke. The nonce is not carried; a verifier given it out of band can open the commitment."
+        },
+        "commitmentVerified": {
+          "type": "boolean",
+          "description": "Whether spellweb opened its own commitment at forge time. A producer statement; a verifier without the nonce reports it as not re-derived."
+        },
+        "signature": {
+          "type": "string",
+          "minLength": 8,
+          "maxLength": 256,
+          "description": "spellweb's signature over the blade, as hex or base64url. It also names the document (`urn:spellweb:artefact:<signature>`)."
+        },
+        "chargeLevel": {
+          "type": "string",
+          "enum": [
+            "spark",
+            "ember",
+            "flame",
+            "inferno",
+            "dragon"
+          ],
+          "description": "The charge reached by the trace before the evoke."
+        },
+        "lapCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "How many laps of the constellation the bearer traced before the evoke."
+        },
+        "nodeCount": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "How many nodes the constellation holds."
+        },
+        "bladeHex": {
+          "type": "string",
+          "maxLength": 16,
+          "description": "OPTIONAL. The blade's display colour as hex, cosmetic only."
+        },
+        "deviationHash": {
+          "$ref": "#/$defs/Hex",
+          "description": "OPTIONAL. Hash of the trace's deviation from the canonical path, where spellweb recorded one."
+        },
+        "mage": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "signature"
+          ],
+          "description": "OPTIONAL. The Mage half's co-signature where the bearer's dual key held one. Absent means the Swordsman forged alone.",
+          "properties": {
+            "id": {
+              "type": "string",
+              "maxLength": 128,
+              "description": "The Mage participant id from the bearer's City Key."
+            },
+            "signature": {
+              "type": "string",
+              "maxLength": 1024,
+              "description": "The Mage's signature over bladeHash."
+            }
+          }
+        }
+      }
+    },
+    "constellation": {
+      "type": "array",
+      "maxItems": 256,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 200
+      },
+      "description": "OPTIONAL. The ordered knowledge-graph node ids the bearer traced and evoked. Absent means the bearer withholds the path and the constellation check is not performed."
+    }
+  },
+  "$defs": {
+    "Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8,128}$",
+      "description": "Lowercase hex, 8 to 128 characters."
+    },
+    "Check": {
+      "description": "One check's result: true passed, false failed, `notReDerived` when the verifier lacked the input to re-derive it, `notPerformed` when the input was absent.",
+      "oneOf": [
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "string",
+          "enum": [
+            "notReDerived",
+            "notPerformed"
+          ]
+        }
+      ]
+    },
+    "Response": {
+      "$anchor": "response",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ok",
+        "checks"
+      ],
+      "description": "The verifier's determination. A failed check is a successful verification with ok: false, not an error.",
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "description": "True when every check performed passed."
+        },
+        "checks": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "shape",
+            "commitment",
+            "constellation",
+            "chain",
+            "witness"
+          ],
+          "description": "Each check of the Verification section by name.",
+          "properties": {
+            "shape": {
+              "$ref": "#/$defs/Check"
+            },
+            "commitment": {
+              "$ref": "#/$defs/Check"
+            },
+            "constellation": {
+              "$ref": "#/$defs/Check"
+            },
+            "chain": {
+              "$ref": "#/$defs/Check"
+            },
+            "witness": {
+              "$ref": "#/$defs/Check"
+            },
+            "carried": {
+              "$ref": "#/$defs/Check"
+            }
+          }
+        }
+      }
+    }
+  }
+}

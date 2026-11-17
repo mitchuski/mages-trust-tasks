@@ -1,0 +1,67 @@
+[
+  {
+    "note": "An open moon cannot be sealed: sealed is fixed to true.",
+    "payload": {
+      "moon": "moon-2026-11-09",
+      "sealed": false,
+      "endsAt": "2026-12-09T10:41:58.007Z",
+      "stars": 0,
+      "marks": 0,
+      "root": "0000000000000000000000000000000000000000000000000000000000000000",
+      "rows": []
+    }
+  },
+  {
+    "note": "A scroll without its root is a list, not a seal.",
+    "payload": {
+      "moon": "moon-2026-10-11",
+      "sealed": true,
+      "endsAt": "2026-11-09T21:57:55.130Z",
+      "stars": 0,
+      "marks": 0,
+      "rows": []
+    }
+  },
+  {
+    "note": "A row carrying content: rows are exactly the chain's columns, and anything added would be published under the City's name.",
+    "payload": {
+      "moon": "moon-2026-10-11",
+      "sealed": true,
+      "endsAt": "2026-11-09T21:57:55.130Z",
+      "stars": 1,
+      "marks": 1,
+      "root": "0000000000000000000000000000000000000000000000000000000000000000",
+      "rows": [ { "seq": 100, "type": "thumb/up", "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded", "hash": "84b48efeb82a1b5bbd491e32e478e2278c42ea6299422075db981d1daa0b2906", "leaf": "41182c4ff646f4ccbdccf0777fb08f0663e41e4458096e06f161d429a6fa04f3", "prev": "239ad7d4c40f907a5279518036713028150e503a7586035cec4594bb7a2c9d88", "recordedAt": "2026-11-01T12:00:00.000Z", "place": "/tailor", "content": "the page I liked" } ]
+    }
+  },
+  {
+    "note": "A row missing its prev cannot be re-linked.",
+    "payload": {
+      "moon": "moon-2026-10-11",
+      "sealed": true,
+      "endsAt": "2026-11-09T21:57:55.130Z",
+      "stars": 1,
+      "marks": 1,
+      "root": "0000000000000000000000000000000000000000000000000000000000000000",
+      "rows": [ { "seq": 100, "type": "thumb/up", "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded", "hash": "84b48efeb82a1b5bbd491e32e478e2278c42ea6299422075db981d1daa0b2906", "leaf": "41182c4ff646f4ccbdccf0777fb08f0663e41e4458096e06f161d429a6fa04f3", "recordedAt": "2026-11-01T12:00:00.000Z", "place": "/tailor" } ]
+    }
+  },
+  {
+    "note": "A different fold rule: the rule, when stated, is the Worker's exactly.",
+    "payload": {
+      "moon": "moon-2026-10-11",
+      "sealed": true,
+      "endsAt": "2026-11-09T21:57:55.130Z",
+      "stars": 0,
+      "marks": 0,
+      "root": "0000000000000000000000000000000000000000000000000000000000000000",
+      "rule": "merkleRows",
+      "rows": []
+    }
+  },
+  {
+    "note": "An acknowledgement without the re-derived root says nothing the keeper can check.",
+    "variant": "response",
+    "payload": { "moon": "moon-2026-10-11", "rows": 5 }
+  }
+]

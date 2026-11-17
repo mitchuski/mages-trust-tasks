@@ -1,0 +1,18 @@
+[
+  {
+    "note": "A key of another kind: this task reads agentprivacy.vta/1 only.",
+    "payload": { "key": { "kind": "agentprivacy.journey-bundle/1" } }
+  },
+  {
+    "note": "κ is written `sha256:` and 64 lowercase hex; a bare hex digest cannot be compared with the re-derived value.",
+    "payload": { "key": { "kind": "agentprivacy.vta/1", "kappa": "6e1d0c4b9a3f27e58d1c0b6a4f9e2d7c3b5a1e8f0d6c4b2a9e7f5d3c1b0a8e6f" } }
+  },
+  {
+    "note": "A packets claim needs both root and count.",
+    "payload": { "key": { "kind": "agentprivacy.vta/1", "packets": { "root": "sha256:9b2e4d6f8a0c1e3b5d7f9a1c3e5b7d9f1a3c5e7b9d1f3a5c7e9b1d3f5a7c9e1b" } } }
+  },
+  {
+    "note": "A request member the task does not define (`grant`) must be refused: presenting a key asks for nothing.",
+    "payload": { "key": { "kind": "agentprivacy.vta/1" }, "grant": "seat" }
+  }
+]

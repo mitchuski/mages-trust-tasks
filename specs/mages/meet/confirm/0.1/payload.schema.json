@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/meet/confirm/0.1",
+  "title": "Meet Confirm — payload",
+  "description": "The opener confirms an accepted meeting; the guide appends one meet edge naming both marks. The response ($defs.Response) is the appended link.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["code", "mark"],
+  "properties": {
+    "code": { "type": "string", "pattern": "^[abcdefghjkmnpqrstuvwxyz23456789]{5}$", "description": "The meeting code shown at open: five characters from the guide's unambiguous alphabet, lowercase." },
+    "mark": { "$ref": "#/$defs/Mark", "description": "The opener's mark; equal to the document's issuer before joining." }
+  },
+  "$defs": {
+    "Mark": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "sha256(\"mark|\" + device secret), 64 lowercase hex." },
+    "Response": {
+      "$anchor": "response",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["seq", "hash", "a", "b"],
+      "description": "The meet link on the guide's chain.",
+      "properties": {
+        "seq": { "type": "integer", "minimum": 0, "description": "The link's sequence number on the guide's chain." },
+        "hash": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "The link's hash, folding the previous link's hash." },
+        "a": { "$ref": "#/$defs/Mark", "description": "The opener's mark." },
+        "b": { "$ref": "#/$defs/Mark", "description": "The acceptor's mark." }
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "slug": "mages/meet",
+  "version": "0.1",
+  "title": "Meet Rite",
+  "summary": "Two phones, two yeses, one edge: one visitor opens a meeting, the other accepts it with their own mark, the opener confirms, and the guide appends one edge naming both.",
+  "status": "draft",
+  "targetFrameworkVersion": "0.6.0",
+  "authors": ["Mitch (https://github.com/mitchuski)"],
+  "keywords": ["mages-city", "hitchhikers-guide", "meet-rite", "bilateral"],
+  "roles": {
+    "opener": { "description": "The visitor who opens the meeting and shows its code; the same mark confirms.", "cardinality": "one" },
+    "acceptor": { "description": "The visitor shown the code, who says yes with their own mark.", "cardinality": "one" },
+    "guide": { "description": "The chain-keeping guide (the Hitchhiker's Guide) that holds the meeting and appends the edge.", "cardinality": "one" }
+  },
+  "steps": {
+    "open": {
+      "kind": "task",
+      "type": "https://tasks.mages.city/spec/mages/meet/open/0.1",
+      "issuer": "opener",
+      "recipient": "guide",
+      "description": "Open a meeting; the guide answers a five-character code valid for ten minutes.",
+      "prev": []
+    },
+    "accept": {
+      "kind": "task",
+      "type": "https://tasks.mages.city/spec/mages/meet/accept/0.1",
+      "issuer": "acceptor",
+      "recipient": "guide",
+      "description": "Say yes to the code with a different mark; the guide names the opener back.",
+      "prev": ["open"]
+    },
+    "confirm": {
+      "kind": "task",
+      "type": "https://tasks.mages.city/spec/mages/meet/confirm/0.1",
+      "issuer": "opener",
+      "recipient": "guide",
+      "description": "The opener confirms after the acceptor's yes; the guide appends one meet edge naming both marks. Its success response exists only when the edge was appended (a refusal is a trust-task-error, a different document type), so reading this step by presence is sound here, unlike a step whose success response can carry a refusal (spec#52).",
+      "prev": ["accept"],
+      "terminal": true
+    }
+  },
+  "completion": { "allOf": ["open", "accept", "confirm"] },
+  "evidence": { "level": "chained" },
+  "maxDuration": "PT10M",
+  "exposure": {
+    "discloses": "metadata",
+    "actsAsSubject": false,
+    "rationale": "max() over the steps is metadata: each discloses a code, a mark or a link. Nothing personal travels; the edge names two pairwise marks on a public chain."
+  },
+  "sideEffects": {
+    "level": "mutating",
+    "rationale": "open and accept change a ten-minute meeting record; confirm appends one edge to an append-only chain. No step is destructive."
+  },
+  "related": ["mages/meet/open", "mages/meet/accept", "mages/meet/confirm", "vrc/relationships/propose"]
+}

@@ -1,0 +1,112 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/proverb/submit/0.1",
+  "title": "Proverb Submit — payload",
+  "description": "A proverb, poem or guide given to the guide's keeper. The response ($defs.Response) is the appended link.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "text"
+  ],
+  "properties": {
+    "kind": {
+      "type": "string",
+      "enum": [
+        "proverb",
+        "poem",
+        "guide"
+      ],
+      "description": "proverb: one line. poem: a few lines. guide: a place and its first clue."
+    },
+    "text": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 1500,
+      "description": "The words: at most 160 characters for a proverb or guide (its first clue), 1,500 for a poem."
+    },
+    "title": {
+      "type": "string",
+      "maxLength": 40,
+      "description": "REQUIRED for a guide (its name, at least 3 characters); a poem MAY carry one; ignored for a proverb."
+    },
+    "by": {
+      "type": "string",
+      "maxLength": 40,
+      "description": "OPTIONAL. The name the visitor signs with. Absent means unsigned."
+    },
+    "place": {
+      "type": "string",
+      "maxLength": 60,
+      "description": "OPTIONAL, guide only. The place the guide leads to."
+    },
+    "offerToFm": {
+      "type": "boolean",
+      "description": "OPTIONAL. True offers the words to be read on Hitchhiker FM (the Worker's `fm`). Absent or false means they are not."
+    },
+    "sealed": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "iv",
+        "ct"
+      ],
+      "description": "OPTIONAL. The same words sealed to the visitor's own key, kept on the link so only its owner can open them later. Absent means nothing sealed is stored.",
+      "properties": {
+        "iv": {
+          "type": "string",
+          "maxLength": 24,
+          "pattern": "^[A-Za-z0-9+/=]+$",
+          "description": "The AES-GCM initialisation vector, base64."
+        },
+        "ct": {
+          "type": "string",
+          "maxLength": 8000,
+          "pattern": "^[A-Za-z0-9+/=]+$",
+          "description": "The ciphertext, base64: at most 2,400 characters for a proverb or guide, 8,000 for a poem."
+        }
+      }
+    }
+  },
+  "if": {
+    "properties": {
+      "kind": {
+        "const": "guide",
+        "description": "Condition: the submission is a guide."
+      }
+    }
+  },
+  "then": {
+    "required": [
+      "title"
+    ]
+  },
+  "$defs": {
+    "Hex256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "A sha256 digest, 64 lowercase hex."
+    },
+    "Response": {
+      "$anchor": "response",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seq",
+        "hash"
+      ],
+      "description": "The appended link.",
+      "properties": {
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The link's sequence number on the guide's chain."
+        },
+        "hash": {
+          "$ref": "#/$defs/Hex256",
+          "description": "The link's hash, folding the previous link's hash."
+        }
+      }
+    }
+  }
+}

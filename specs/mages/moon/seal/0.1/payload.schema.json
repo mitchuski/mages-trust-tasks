@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/moon/seal/0.1",
+  "title": "Moon Seal — payload",
+  "description": "A closed moon's rows of the shared stars chain, sealed as a scroll: exactly the stars Worker's GET /scroll?moon= output, with sealed fixed to true. The response is Mages City's acknowledgement carrying the root it re-derived.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "moon",
+    "sealed",
+    "endsAt",
+    "stars",
+    "marks",
+    "root",
+    "rows"
+  ],
+  "properties": {
+    "moon": {
+      "$ref": "#/$defs/MoonId"
+    },
+    "sealed": {
+      "const": true,
+      "description": "Only a closed moon is sealed."
+    },
+    "endsAt": {
+      "type": "string",
+      "format": "date-time",
+      "description": "When the moon ended."
+    },
+    "stars": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "The number of rows, egg/find rows included."
+    },
+    "marks": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "The number of distinct marks among the rows."
+    },
+    "root": {
+      "$ref": "#/$defs/Hex256",
+      "description": "Fold of sha256(root + \"|\" + hash) from 64 zeros over the rows' hashes in chain order."
+    },
+    "rule": {
+      "const": "linkFoldV1",
+      "description": "OPTIONAL. Names the fold rule: `linkFoldV1` is root = sha256(root + \"|\" + hash), from 64 zeros, over this moon's links in chain order (the Worker states it in words)."
+    },
+    "rows": {
+      "type": "array",
+      "maxItems": 38000,
+      "description": "Every row of the moon, in chain order. At most 38,000 rows, the count the 16 MiB maxDocumentBytes holds at about 430 bytes per row.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "seq",
+          "type",
+          "mark",
+          "hash",
+          "leaf",
+          "prev",
+          "recordedAt",
+          "place"
+        ],
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "The row's sequence number on the stars chain, from 0, strictly increasing in chain order."
+          },
+          "type": {
+            "type": "string",
+            "pattern": "^[a-z]+(-[a-z]+)*/[a-z]+(-[a-z]+)*$",
+            "maxLength": 40,
+            "description": "The star type (a deliberate star, or egg/find)."
+          },
+          "mark": {
+            "$ref": "#/$defs/Hex256"
+          },
+          "hash": {
+            "$ref": "#/$defs/Hex256",
+            "description": "sha256(prev + \"|\" + leaf + \"|\" + mark + \"|\" + seq)."
+          },
+          "leaf": {
+            "$ref": "#/$defs/Hex256"
+          },
+          "prev": {
+            "$ref": "#/$defs/Hex256"
+          },
+          "recordedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the row was appended."
+          },
+          "place": {
+            "type": "string",
+            "pattern": "^(/[a-z0-9/-]{0,40})?$",
+            "description": "The first path segment of the page, or empty when the star carried none."
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "Hex256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "A SHA-256 digest as 64 lowercase hex characters."
+    },
+    "MoonId": {
+      "type": "string",
+      "pattern": "^moon-[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "description": "A moon: moon-YYYY-MM-DD, the UTC date of its new moon."
+    },
+    "Response": {
+      "$anchor": "response",
+      "title": "Moon Seal — response payload",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "moon",
+        "root",
+        "rows"
+      ],
+      "properties": {
+        "moon": {
+          "$ref": "#/$defs/MoonId"
+        },
+        "root": {
+          "$ref": "#/$defs/Hex256",
+          "description": "The root Mages City re-derived from the rows."
+        },
+        "rows": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The number of rows recorded."
+        },
+        "scrollRef": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 256,
+          "description": "OPTIONAL. Where the City publishes the scroll."
+        }
+      }
+    }
+  }
+}

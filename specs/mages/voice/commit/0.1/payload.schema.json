@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/voice/commit/0.1",
+  "title": "Voice Commit — payload",
+  "description": "A sealed voice note committed by its hash, optionally offered to Hitchhiker FM. The response ($defs.Response) is the appended link.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "voice"
+  ],
+  "properties": {
+    "voice": {
+      "$ref": "#/$defs/Hex256",
+      "description": "sha256(\"voice|\" + iv + \"|\" + ct) over the note's sealed box: the note's id."
+    },
+    "as": {
+      "type": "string",
+      "enum": [
+        "proverb",
+        "poem",
+        "pledge",
+        "question",
+        "fortyTwo"
+      ],
+      "description": "OPTIONAL. What the note is, a public word bound into the leaf. Absent means unsaid. `fortyTwo` is the Worker's `42`, the answer to the guide's question."
+    },
+    "where": {
+      "type": "string",
+      "enum": [
+        "personal",
+        "table",
+        "palava"
+      ],
+      "description": "OPTIONAL. Which ceremony it was said in, a public word bound into the leaf. Absent means unsaid."
+    },
+    "seconds": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 60,
+      "description": "OPTIONAL. The note's length in whole seconds (the Worker's `secs`)."
+    },
+    "offer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "iv",
+        "ct"
+      ],
+      "description": "OPTIONAL. Present only when the visitor offers the note to Hitchhiker FM. Absent means proof only: no audio is sent.",
+      "properties": {
+        "iv": {
+          "type": "string",
+          "maxLength": 24,
+          "pattern": "^[A-Za-z0-9+/=]+$",
+          "description": "The sealed box's AES-GCM initialisation vector, base64."
+        },
+        "ct": {
+          "type": "string",
+          "maxLength": 480000,
+          "pattern": "^[A-Za-z0-9+/=]+$",
+          "description": "The sealed box's ciphertext, base64."
+        },
+        "open": {
+          "type": "string",
+          "maxLength": 480000,
+          "pattern": "^[A-Za-z0-9+/=]+$",
+          "description": "OPTIONAL. The open copy to be played, base64. Absent means the offer is of the sealed box only."
+        },
+        "mediaType": {
+          "type": "string",
+          "maxLength": 40,
+          "description": "OPTIONAL. The open copy's media type; absent means audio/webm."
+        }
+      }
+    }
+  },
+  "$defs": {
+    "Hex256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "A sha256 digest, 64 lowercase hex."
+    },
+    "Response": {
+      "$anchor": "response",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seq",
+        "hash"
+      ],
+      "description": "The appended link.",
+      "properties": {
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The link's sequence number on the guide's chain."
+        },
+        "hash": {
+          "$ref": "#/$defs/Hex256",
+          "description": "The link's hash, folding the previous link's hash."
+        }
+      }
+    }
+  }
+}

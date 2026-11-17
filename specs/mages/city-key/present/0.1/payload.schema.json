@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/city-key/present/0.1",
+  "title": "City Key Present — payload",
+  "description": "A City Key (agentprivacy.vta/1) with the packets and chain faces the bearer chooses to give; the response ($defs.Response) is the reader's four-state determination per claim.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["key"],
+  "properties": {
+    "key": {
+      "type": "object",
+      "description": "The City Key exactly as exported. Its full shape is owned by agentprivacy.vta/1; members not listed here are carried and folded into κ but not checked by this task.",
+      "required": ["kind"],
+      "properties": {
+        "kind": { "const": "agentprivacy.vta/1", "description": "The record kind." },
+        "kappa": { "$ref": "#/$defs/Sha256", "description": "OPTIONAL. The key's κ as stamped at export. Absent on a working key never exported." },
+        "did": { "type": "string", "pattern": "^did:key:z[1-9A-HJ-NP-Za-km-z]{40,60}$", "description": "OPTIONAL. The bearer's did:key, derived from identity.publicKeyHex." },
+        "identity": {
+          "type": "object",
+          "description": "OPTIONAL. The card identity.",
+          "properties": {
+            "publicKeyHex": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "The ed25519 card public key, 64 lowercase hex." },
+            "trustTier": { "type": "string", "maxLength": 32, "description": "OPTIONAL. The tier the key has reached (blade, light, heavy, dragon)." }
+          }
+        },
+        "packets": { "$ref": "#/$defs/RootCount", "description": "OPTIONAL. Root and count over the key's packet proofs." },
+        "holds": { "$ref": "#/$defs/RootCount", "description": "OPTIONAL. Root and count of the Hold kept beside the key; never re-derived by the City." },
+        "chains": { "$ref": "#/$defs/RootCount", "description": "OPTIONAL. Root and count over the chain faces folded into the key." }
+      }
+    },
+    "packets": {
+      "type": "array",
+      "maxItems": 4096,
+      "description": "OPTIONAL. The packets the bearer gives so the reader can re-derive packetsRoot. Absent means the packets claims are `absent` or `unavailable`.",
+      "items": {
+        "type": "object",
+        "required": ["proof"],
+        "description": "One packet as held by the key; its proof is the hash of its canonical form without proof.",
+        "properties": {
+          "proof": { "$ref": "#/$defs/Sha256", "description": "The packet's stamped proof." }
+        }
+      }
+    },
+    "faces": {
+      "type": "array",
+      "maxItems": 64,
+      "description": "OPTIONAL. The chain faces (agentprivacy.chain-faces/1) so the reader can re-derive chains. Absent means the chains claim is `unavailable`.",
+      "items": {
+        "type": "object",
+        "required": ["root", "count", "states"],
+        "description": "One face: public chain roots keyed by lattice vertex.",
+        "properties": {
+          "root": { "$ref": "#/$defs/Sha256", "description": "The face's root." },
+          "count": { "type": "integer", "minimum": 0, "description": "How many states the face folds." },
+          "states": { "type": "object", "description": "Vertex number to { k: chain root κ }." }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "Sha256": { "type": "string", "pattern": "^sha256:[0-9a-f]{64}$", "description": "A sha256 digest as `sha256:` and 64 lowercase hex." },
+    "RootCount": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["root", "count"],
+      "description": "A fold root and the number of items under it.",
+      "properties": {
+        "root": { "$ref": "#/$defs/Sha256", "description": "The fold root." },
+        "count": { "type": "integer", "minimum": 0, "description": "The number of items folded." }
+      }
+    },
+    "State": { "type": "string", "enum": ["match", "mismatch", "absent", "unavailable"], "description": "match: re-derived and agrees. mismatch: re-derived and disagrees. absent: nothing was claimed. unavailable: claimed, but the material to check it was not given." },
+    "Response": {
+      "$anchor": "response",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ok", "states", "unverified"],
+      "description": "The reader's determination. ok means nothing contradicted, never a permission.",
+      "properties": {
+        "ok": { "type": "boolean", "description": "True when no state is mismatch." },
+        "states": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kappa", "packetProofs", "packetsRoot", "did", "holds", "chains"],
+          "description": "One state per claim.",
+          "properties": {
+            "kappa": { "$ref": "#/$defs/State", "description": "The key's κ." },
+            "packetProofs": { "$ref": "#/$defs/State", "description": "Every given packet's proof." },
+            "packetsRoot": { "$ref": "#/$defs/State", "description": "The packets root and count." },
+            "did": { "$ref": "#/$defs/State", "description": "The DID against the public key." },
+            "holds": { "$ref": "#/$defs/State", "description": "The Hold: never re-derived here, so absent or unavailable." },
+            "chains": { "$ref": "#/$defs/State", "description": "The chain faces root." }
+          }
+        },
+        "unverified": {
+          "type": "array",
+          "maxItems": 6,
+          "items": { "type": "string", "enum": ["kappa", "packetProofs", "packetsRoot", "did", "holds", "chains"] },
+          "description": "The claims whose state is absent or unavailable: what a consumer must read before showing anything as verified."
+        },
+        "participantId": { "type": "string", "pattern": "^ap-[0-9a-f]{16}$", "description": "OPTIONAL. The participant id derived from identity.publicKeyHex." }
+      }
+    }
+  }
+}

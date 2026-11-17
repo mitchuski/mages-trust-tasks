@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/island/stone/0.1",
+  "title": "Island Stone — payload",
+  "description": "The stone proof a walker presents (kind agentprivacy/island-stone/1): their mark, their island stars in chain order ending in the stone laid at the threshold, each with its leaf preimage, and the root they fold to. The response is the verifier's determination: the five checks and the stations found.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "mark",
+    "root",
+    "stars"
+  ],
+  "properties": {
+    "kind": {
+      "const": "agentprivacy/island-stone/1",
+      "description": "The stone proof kind."
+    },
+    "mark": {
+      "$ref": "#/$defs/Hex256",
+      "description": "The walker's mark. Before joining, equal to the document's issuer."
+    },
+    "root": {
+      "$ref": "#/$defs/Hex256",
+      "description": "Fold of sha256(root + \"|\" + hash) from 64 zeros over the stars' hashes, in order."
+    },
+    "stars": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 64,
+      "description": "The walker's island stars in chain order, ending in the island/stone star.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "seq",
+          "type",
+          "recordedAt",
+          "leaf",
+          "prev",
+          "hash",
+          "pre"
+        ],
+        "properties": {
+          "seq": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "The star's position on the walker's own chain."
+          },
+          "type": {
+            "enum": [
+              "island/quest",
+              "island/stone"
+            ],
+            "description": "A quest station walked, or the stone laid at the threshold."
+          },
+          "recordedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "When the star was made; must equal the preimage's at."
+          },
+          "leaf": {
+            "$ref": "#/$defs/Hex256",
+            "description": "sha256(pre)."
+          },
+          "prev": {
+            "$ref": "#/$defs/Hex256",
+            "description": "The hash of the star before this one on the walker's own chain (64 zeros for the first)."
+          },
+          "hash": {
+            "$ref": "#/$defs/Hex256",
+            "description": "sha256(prev + \"|\" + leaf + \"|\" + mark + \"|\" + seq)."
+          },
+          "moon": {
+            "type": "string",
+            "pattern": "^moon-[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+            "description": "OPTIONAL. The moon the star was made in."
+          },
+          "pre": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 1024,
+            "description": "The leaf's preimage exactly as hashed: JSON.stringify({type, content: {station, archetype}, at})."
+          }
+        }
+      }
+    },
+    "chain": {
+      "type": "string",
+      "format": "uri",
+      "maxLength": 256,
+      "description": "OPTIONAL. Base URL of the shared stars chain that may witness these leaves (GET /evidence?mark=)."
+    }
+  },
+  "$defs": {
+    "Hex256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "A SHA-256 digest as 64 lowercase hex characters."
+    },
+    "Response": {
+      "$anchor": "response",
+      "title": "Island Stone — response payload",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ok",
+        "steps",
+        "quests"
+      ],
+      "properties": {
+        "ok": {
+          "type": "boolean",
+          "description": "True when every check performed passed."
+        },
+        "steps": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 16,
+          "description": "One entry per check, in the order performed.",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name",
+              "ok"
+            ],
+            "properties": {
+              "name": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 120,
+                "description": "The check, in the verifier's words (the reference verifier's five names are in spec.md)."
+              },
+              "ok": {
+                "type": "boolean",
+                "description": "Whether this verification step passed."
+              },
+              "note": {
+                "type": "string",
+                "maxLength": 200,
+                "description": "OPTIONAL. A short note, e.g. the root the verifier derived or how many leaves the chain had seen. Never verifier-internal state."
+              }
+            }
+          }
+        },
+        "quests": {
+          "type": "array",
+          "maxItems": 64,
+          "items": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "description": "The station numbers found in the preimages, in order."
+        },
+        "witnessed": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "seen",
+            "of"
+          ],
+          "description": "OPTIONAL. Present when the shared chain was consulted.",
+          "properties": {
+            "seen": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "How many of the stone's stars the keeper found on the shared chain."
+            },
+            "of": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "How many stars the stone carries, the denominator of `seen`."
+            }
+          }
+        }
+      }
+    }
+  }
+}

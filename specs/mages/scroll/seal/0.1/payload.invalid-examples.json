@@ -1,0 +1,18 @@
+[
+  {
+    "note": "A scroll lives under mages.city; another domain is not the City's to publish.",
+    "payload": { "scroll": "formal", "domain": "formal.example.com", "bundles": [ { "root": "c52609b736406d6fe646db7e735e7380d4fb6309cc9c481480fb9709c5077e8e", "mintedOn": "2026-11-12", "location": "https://github.com/mitchuski/trust-tasks-formal/tree/main/evidence/2026-11-12_tt188" } ] }
+  },
+  {
+    "note": "Roots are bare lowercase hex; the sha256: prefix is stripped, as the scroll page shows them.",
+    "payload": { "scroll": "formal", "bundles": [ { "root": "sha256:c52609b736406d6fe646db7e735e7380d4fb6309cc9c481480fb9709c5077e8e", "mintedOn": "2026-11-12", "location": "https://github.com/mitchuski/trust-tasks-formal/tree/main/evidence/2026-11-12_tt188" } ] }
+  },
+  {
+    "note": "A scroll with no books seals nothing.",
+    "payload": { "scroll": "formal", "bundles": [] }
+  },
+  {
+    "note": "A bundle carries no title or label: only hashes, dates and numerals leave the City.",
+    "payload": { "scroll": "formal", "bundles": [ { "root": "c52609b736406d6fe646db7e735e7380d4fb6309cc9c481480fb9709c5077e8e", "mintedOn": "2026-11-12", "location": "https://github.com/mitchuski/trust-tasks-formal/tree/main/evidence/2026-11-12_tt188", "title": "Trust Tasks formal models" } ] }
+  }
+]

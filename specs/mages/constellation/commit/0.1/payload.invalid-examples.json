@@ -1,0 +1,145 @@
+[
+  {
+    "note": "Over the cap: a constellation holds at most 42 stars (maxItems). Here 43 copies of one star; the cap must fail before any duplicate check is reached.",
+    "payload": {
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "moon": "moon-2026-11-09",
+      "stars": [
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" },
+        { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" }
+      ],
+      "egg": { "page": "/tailor", "hash": "951ae6a1dd4b6cdf297bd9e72a16d3454619ac28682dae1fed8d89e7c482df7b" },
+      "nonce": 62839
+    }
+  },
+  {
+    "note": "An empty constellation: a commit holds 1 to 42 stars (minItems 1).",
+    "payload": {
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "moon": "moon-2026-11-09",
+      "stars": [],
+      "egg": { "page": "/tailor", "hash": "951ae6a1dd4b6cdf297bd9e72a16d3454619ac28682dae1fed8d89e7c482df7b" },
+      "nonce": 62839
+    }
+  },
+  {
+    "note": "A passive star (workshop/enter) is not deliberate and never leaves the browser; the type enum must reject it.",
+    "payload": {
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "moon": "moon-2026-11-09",
+      "stars": [ { "type": "workshop/enter", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" } ],
+      "egg": { "page": "/tailor", "hash": "951ae6a1dd4b6cdf297bd9e72a16d3454619ac28682dae1fed8d89e7c482df7b" },
+      "nonce": 62839
+    }
+  },
+  {
+    "note": "Content travelling with a star: only type, leaf and place may go up (additionalProperties: false on the star).",
+    "payload": {
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "moon": "moon-2026-11-09",
+      "stars": [ { "type": "proverb/write", "leaf": "dcf38c02b565fda3cb73f79a083e0c4c8d86b12986e186ec5e4d0341b12d2a94", "content": "a proverb in the clear" } ],
+      "egg": { "page": "/tailor", "hash": "951ae6a1dd4b6cdf297bd9e72a16d3454619ac28682dae1fed8d89e7c482df7b" },
+      "nonce": 62839
+    }
+  },
+  {
+    "note": "A leaf in uppercase hex: digests are compared as strings, so only lowercase hex is a leaf.",
+    "payload": {
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "moon": "moon-2026-11-09",
+      "stars": [ { "type": "thumb/up", "leaf": "6AAF0638E9569DAE87D3ECAA72B09C3FDA3AD38DBA56562B09A959E59D507572" } ],
+      "egg": { "page": "/tailor", "hash": "951ae6a1dd4b6cdf297bd9e72a16d3454619ac28682dae1fed8d89e7c482df7b" },
+      "nonce": 62839
+    }
+  },
+  {
+    "note": "No hidden star: egg is required.",
+    "payload": {
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "moon": "moon-2026-11-09",
+      "stars": [ { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" } ],
+      "nonce": 62839
+    }
+  },
+  {
+    "note": "A place deeper than the Worker accepts in shape (uppercase, query): places are lowercase path segments only.",
+    "payload": {
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "moon": "moon-2026-11-09",
+      "stars": [ { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572", "place": "/Tailor?x=1" } ],
+      "egg": { "page": "/tailor", "hash": "951ae6a1dd4b6cdf297bd9e72a16d3454619ac28682dae1fed8d89e7c482df7b" },
+      "nonce": 62839
+    }
+  },
+  {
+    "note": "A moon named by something other than its new-moon date.",
+    "payload": {
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "moon": "november",
+      "stars": [ { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" } ],
+      "egg": { "page": "/tailor", "hash": "951ae6a1dd4b6cdf297bd9e72a16d3454619ac28682dae1fed8d89e7c482df7b" },
+      "nonce": 62839
+    }
+  },
+  {
+    "note": "A negative nonce: the nonce is a non-negative integer written in decimal.",
+    "payload": {
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "moon": "moon-2026-11-09",
+      "stars": [ { "type": "thumb/up", "leaf": "6aaf0638e9569dae87d3ecaa72b09c3fda3ad38dba56562b09a959e59d507572" } ],
+      "egg": { "page": "/tailor", "hash": "951ae6a1dd4b6cdf297bd9e72a16d3454619ac28682dae1fed8d89e7c482df7b" },
+      "nonce": -1
+    }
+  },
+  {
+    "note": "A response without the head: the producer cannot check where its stars landed without it.",
+    "variant": "response",
+    "payload": { "first": 1207, "last": 1210, "stars": 3 }
+  },
+  {
+    "note": "A response claiming more than 42 stars appended.",
+    "variant": "response",
+    "payload": { "first": 0, "last": 43, "head": "c1f0a9e47b2d3586e0f4a1b9c7d2e358f6a0b4c1d9e7f2a3b5c6d8e0f1a2b3c4", "stars": 43 }
+  }
+]

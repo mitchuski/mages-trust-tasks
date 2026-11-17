@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/scroll/seal/0.1",
+  "title": "Scroll Seal — payload",
+  "description": "A mage's κ evidence bundles, by root and location, to be sealed as one scroll on its mages.city subdomain. The response ($defs.Response) is the scroll's address and the count of hashes sealed.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "scroll",
+    "bundles"
+  ],
+  "properties": {
+    "scroll": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$",
+      "maxLength": 40,
+      "description": "The scroll id, which is also its subdomain label by default."
+    },
+    "domain": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(-[a-z0-9]+)*\\.mages\\.city$",
+      "maxLength": 80,
+      "description": "OPTIONAL. The subdomain to publish at. Absent means <scroll>.mages.city, or the domain already registered for this scroll."
+    },
+    "bundles": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "description": "The bundles, one book each, in book order (I to X).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "root",
+          "mintedOn",
+          "location"
+        ],
+        "description": "One κ evidence bundle.",
+        "properties": {
+          "root": {
+            "$ref": "#/$defs/Hex256",
+            "description": "The bundle's sha256 root (root.json root_kappa, without the sha256: prefix)."
+          },
+          "blake3": {
+            "$ref": "#/$defs/Hex256",
+            "description": "OPTIONAL. The bundle's BLAKE3 root, where minted."
+          },
+          "mintedOn": {
+            "type": "string",
+            "format": "date",
+            "description": "The day the bundle was minted (root.json minted_on)."
+          },
+          "location": {
+            "type": "string",
+            "format": "uri",
+            "pattern": "^https://",
+            "maxLength": 512,
+            "description": "Where the City fetches the bundle from: an HTTPS URL of the bundle directory."
+          }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "Hex256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "A 256-bit digest, 64 lowercase hex."
+    },
+    "Response": {
+      "$anchor": "response",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "href",
+        "books",
+        "sealed"
+      ],
+      "description": "The sealed scroll.",
+      "properties": {
+        "href": {
+          "type": "string",
+          "format": "uri",
+          "maxLength": 200,
+          "description": "The scroll's page.",
+          "pattern": "^https://"
+        },
+        "books": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "How many books the scroll now holds."
+        },
+        "sealed": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "How many hashes this seal joined to the ledger (objects, edges and roots)."
+        }
+      }
+    }
+  }
+}

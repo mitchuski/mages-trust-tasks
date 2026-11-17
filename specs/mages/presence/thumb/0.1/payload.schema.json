@@ -1,0 +1,29 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/presence/thumb/0.1",
+  "title": "Presence Thumb — payload",
+  "description": "A thumbs up sent to a chain-keeping guide, under the visitor's mark (the issuer). Optional: the digest of a claim code the phone keeps, and the room's witness code. The response ($defs.Response) is the appended link.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "claimDigest": { "$ref": "#/$defs/Hex256", "description": "OPTIONAL. Lowercase hex sha256 of the claim code the phone minted and keeps (a vtc/badges ClaimSecret: at least 128 random bits, base64url). Absent means the thumb can never be redeemed for the night's badge." },
+    "witness": { "type": "string", "pattern": "^[0-9a-f]{10}$", "description": "OPTIONAL. The room's witness code as shown on its screen. Absent means a plain thumb, not a witness link." }
+  },
+  "$defs": {
+    "Hex256": { "type": "string", "pattern": "^[0-9a-f]{64}$", "description": "A sha256 digest, 64 lowercase hex." },
+    "Response": {
+      "$anchor": "response",
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["seq", "hash", "kind", "witnessed"],
+      "description": "The appended link.",
+      "properties": {
+        "seq": { "type": "integer", "minimum": 0, "description": "The link's sequence number on the guide's chain." },
+        "hash": { "$ref": "#/$defs/Hex256", "description": "The link's hash, folding the previous link's hash." },
+        "kind": { "type": "string", "enum": ["thumb", "witness"], "description": "witness when the room's code checked, else thumb." },
+        "witnessed": { "type": "boolean", "description": "Whether the witness code checked." },
+        "expired": { "type": "boolean", "description": "Present and true when a witness code was given but did not check (its window had passed)." }
+      }
+    }
+  }
+}

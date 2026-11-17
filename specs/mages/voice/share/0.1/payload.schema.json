@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/voice/share/0.1",
+  "title": "Voice Share — payload",
+  "description": "One committed voice note, sealed to the keeper's public key. The response ($defs.Response) is the appended link.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "voice",
+    "audioHash",
+    "iv",
+    "ct",
+    "wrapped"
+  ],
+  "properties": {
+    "voice": {
+      "$ref": "#/$defs/Hex256",
+      "description": "The note's id, as committed with mages/voice/commit."
+    },
+    "audioHash": {
+      "$ref": "#/$defs/Hex256",
+      "description": "sha256 of the open audio, so the keeper can check the copy is the note."
+    },
+    "iv": {
+      "type": "string",
+      "maxLength": 24,
+      "pattern": "^[A-Za-z0-9+/=]+$",
+      "description": "The keeper copy's AES-GCM initialisation vector, base64."
+    },
+    "ct": {
+      "type": "string",
+      "maxLength": 480000,
+      "pattern": "^[A-Za-z0-9+/=]+$",
+      "description": "The keeper copy's ciphertext, base64."
+    },
+    "wrapped": {
+      "type": "string",
+      "maxLength": 1200,
+      "pattern": "^[A-Za-z0-9+/=]+$",
+      "description": "The AES key wrapped to the keeper's RSA-OAEP public key, base64."
+    }
+  },
+  "$defs": {
+    "Hex256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "A sha256 digest, 64 lowercase hex."
+    },
+    "Response": {
+      "$anchor": "response",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "seq",
+        "hash"
+      ],
+      "description": "The appended link.",
+      "properties": {
+        "seq": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The link's sequence number on the guide's chain."
+        },
+        "hash": {
+          "$ref": "#/$defs/Hex256",
+          "description": "The link's hash, folding the previous link's hash."
+        }
+      }
+    }
+  }
+}

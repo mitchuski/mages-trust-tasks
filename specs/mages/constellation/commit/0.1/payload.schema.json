@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/constellation/commit/0.1",
+  "title": "Constellation Commit — payload",
+  "description": "Once per mark per moon: up to 42 deliberate stars, as hashes only, sent to the shared stars chain with this moon's hidden star and a proof of work over everything committed. The members are exactly the body of the stars Worker's POST /constellation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mark",
+    "moon",
+    "stars",
+    "egg",
+    "nonce"
+  ],
+  "properties": {
+    "mark": {
+      "$ref": "#/$defs/Hex256",
+      "description": "The visitor's mark: sha256(\"mark|\" + device secret). Before joining, equal to the document's issuer."
+    },
+    "moon": {
+      "$ref": "#/$defs/MoonId",
+      "description": "The moon now open. The consumer refuses any other (notThisMoon)."
+    },
+    "stars": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 42,
+      "description": "The constellation, in the order the stars are to be appended. Leaves must be distinct (duplicateStar; not expressible as uniqueItems because two stars could differ only in place).",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "type",
+          "leaf"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "thumb/up",
+              "proverb/write",
+              "promise/make",
+              "promise/keep",
+              "record/leave",
+              "note/leave",
+              "guide/walk",
+              "island/quest",
+              "island/stone",
+              "artefact/present",
+              "workshop/presence",
+              "proverb/inscribe",
+              "spellbook/inscribe"
+            ],
+            "description": "The star's type. Only deliberate stars may be committed; passive ones never leave the browser."
+          },
+          "leaf": {
+            "$ref": "#/$defs/Hex256",
+            "description": "The star's leaf: v2 = sha256 of the RFC 8785 canonical form of the star's Trust Task document; v1 = sha256 of JSON.stringify({type, content, at})."
+          },
+          "place": {
+            "$ref": "#/$defs/Place",
+            "description": "OPTIONAL. The first path segment of the page the star was made on."
+          }
+        }
+      }
+    },
+    "egg": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "page",
+        "hash"
+      ],
+      "description": "This moon's hidden star.",
+      "properties": {
+        "page": {
+          "$ref": "#/$defs/Place",
+          "description": "The page the hidden star was found on."
+        },
+        "hash": {
+          "$ref": "#/$defs/Hex256",
+          "description": "sha256(\"egg|\" + mark + \"|\" + moon + \"|\" + page)."
+        }
+      }
+    },
+    "nonce": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 9007199254740991,
+      "description": "The proof-of-work nonce, written in decimal into sha256(\"pow|\" + mark + \"|\" + moon + \"|\" + setRoot + \"|\" + egg.hash + \"|\" + nonce), which must have at least D leading zero bits (D = 16 in this version)."
+    }
+  },
+  "$defs": {
+    "Hex256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "A SHA-256 digest as 64 lowercase hex characters."
+    },
+    "MoonId": {
+      "type": "string",
+      "pattern": "^moon-[0-9]{4}-[0-9]{2}-[0-9]{2}$",
+      "description": "A moon: moon-YYYY-MM-DD, the UTC date of its new moon."
+    },
+    "Place": {
+      "type": "string",
+      "pattern": "^/[a-z0-9/-]{0,40}$",
+      "description": "A path segment of a public page, as the stars Worker accepts it."
+    },
+    "Response": {
+      "$anchor": "response",
+      "title": "Constellation Commit — response payload",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "first",
+        "last",
+        "head",
+        "stars"
+      ],
+      "properties": {
+        "first": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Sequence number of the first appended star."
+        },
+        "last": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Sequence number of the last appended row, the egg/find row. last - first = stars."
+        },
+        "head": {
+          "$ref": "#/$defs/Hex256",
+          "description": "The chain's head (newest link hash) after the append."
+        },
+        "stars": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 42,
+          "description": "How many stars were appended, not counting the egg/find row."
+        }
+      }
+    }
+  }
+}

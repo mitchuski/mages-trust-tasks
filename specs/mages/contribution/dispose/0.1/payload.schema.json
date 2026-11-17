@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/contribution/dispose/0.1",
+  "title": "Contribution Dispose — payload",
+  "description": "The keeper's answer to one contribution, by its hash. An addressed answer carries the guide root where the change lives.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "contribution",
+    "disposition"
+  ],
+  "properties": {
+    "contribution": {
+      "$ref": "#/$defs/Hex256",
+      "description": "The contribution's link hash on the guide's chain, as the keeper's sweep re-derives it."
+    },
+    "disposition": {
+      "type": "string",
+      "enum": [
+        "addressed",
+        "declined",
+        "deferred",
+        "keptPrivate"
+      ],
+      "description": "addressed: the change is in the guide at guideRoot. declined: it will not be taken up. deferred: not yet. keptPrivate: it shapes the guide without being shown."
+    },
+    "guideRoot": {
+      "$ref": "#/$defs/Hex256",
+      "description": "REQUIRED when disposition is addressed: the root of the guide release that carries the change. Absent otherwise."
+    },
+    "note": {
+      "type": "string",
+      "maxLength": 500,
+      "description": "OPTIONAL. A short word to the contributor. Never a quotation of the contribution."
+    }
+  },
+  "if": {
+    "properties": {
+      "disposition": {
+        "const": "addressed",
+        "description": "Condition: the disposition is addressed."
+      }
+    }
+  },
+  "then": {
+    "required": [
+      "guideRoot"
+    ]
+  },
+  "$defs": {
+    "Hex256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "A sha256 digest, 64 lowercase hex."
+    }
+  }
+}

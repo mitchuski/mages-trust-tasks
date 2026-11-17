@@ -1,0 +1,14 @@
+[
+  {
+    "note": "An addressed contribution must say where the change lives (the census check addressed-without-root).",
+    "payload": { "contribution": "8d6f4b2a0e8c6a4f2d0b8e6c4a2f0d8b6e4c2a0f8d6b4e2c0a8f6d4b2e0c8a6f", "disposition": "addressed" }
+  },
+  {
+    "note": "Only the four dispositions exist; the ledger's file spelling kept-private is not the wire spelling.",
+    "payload": { "contribution": "8d6f4b2a0e8c6a4f2d0b8e6c4a2f0d8b6e4c2a0f8d6b4e2c0a8f6d4b2e0c8a6f", "disposition": "kept-private" }
+  },
+  {
+    "note": "The contribution itself never rides in a disposition.",
+    "payload": { "contribution": "8d6f4b2a0e8c6a4f2d0b8e6c4a2f0d8b6e4c2a0f8d6b4e2c0a8f6d4b2e0c8a6f", "disposition": "declined", "text": "the original note" }
+  }
+]

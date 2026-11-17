@@ -1,0 +1,24 @@
+[
+  {
+    "note": "A guide needs its name.",
+    "payload": {
+      "kind": "guide",
+      "text": "Under the third arch, look up."
+    }
+  },
+  {
+    "note": "Only three kinds exist.",
+    "payload": {
+      "kind": "essay",
+      "text": "A key shown is not a key given."
+    }
+  },
+  {
+    "note": "Nothing beyond the words, their name and place may ride along.",
+    "payload": {
+      "kind": "proverb",
+      "text": "A key shown is not a key given.",
+      "email": "someone@example.com"
+    }
+  }
+]

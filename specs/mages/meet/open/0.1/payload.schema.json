@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://tasks.mages.city/spec/mages/meet/open/0.1",
+  "title": "Meet Open — payload",
+  "description": "The opener asks for a meeting. The response ($defs.Response) is the code to show.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mark"
+  ],
+  "properties": {
+    "mark": {
+      "$ref": "#/$defs/Mark",
+      "description": "The opener's mark; equal to the document's issuer before joining."
+    }
+  },
+  "$defs": {
+    "Mark": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "sha256(\"mark|\" + device secret), 64 lowercase hex."
+    },
+    "Response": {
+      "$anchor": "response",
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "expiresAt"
+      ],
+      "description": "The open meeting.",
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "^[abcdefghjkmnpqrstuvwxyz23456789]{5}$",
+          "description": "The meeting code: five characters from the guide's unambiguous alphabet, lowercase."
+        },
+        "expiresAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "When the meeting closes: 600 seconds after it opened."
+        }
+      }
+    }
+  }
+}

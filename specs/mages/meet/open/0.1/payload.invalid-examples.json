@@ -1,0 +1,15 @@
+[
+  {
+    "note": "A mark is 64 lowercase hex.",
+    "payload": {
+      "mark": "me"
+    }
+  },
+  {
+    "note": "The opener cannot name the other person in advance: who meets is decided face to face, by who accepts.",
+    "payload": {
+      "mark": "2e1dba5c6e34487e6cbd9de6e673f0f173bdeb94eabe630fcca7aae4428acded",
+      "with": "542e8a6d6a7c20d56d55b7366a18313b13e0b011027d12dfb42604e1d7b7d0ad"
+    }
+  }
+]

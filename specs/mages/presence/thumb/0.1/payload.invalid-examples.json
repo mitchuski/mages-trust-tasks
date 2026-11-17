@@ -1,0 +1,14 @@
+[
+  {
+    "note": "The claim code itself never leaves the phone; only its digest is sent.",
+    "payload": { "claimCode": "Qm7xV2kR9pLw4Nt8Hs3Fz6Bd1Yc5Je0Ua" }
+  },
+  {
+    "note": "A thumb is a presence, not a message: free text has no place in it.",
+    "payload": { "note": "loved it" }
+  },
+  {
+    "note": "A witness code is the 10 hex characters shown on the room's screen.",
+    "payload": { "witness": "ROOM-42" }
+  }
+]
